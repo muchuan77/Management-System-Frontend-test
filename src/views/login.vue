@@ -1,19 +1,19 @@
-<template >
+<template>
   <el-row class="login-container">
     <el-col :lg="16" :md="12" class="left">
       <div>
-        <div class="bigTitle">媒体商城管理系统</div>
+        <div class="bigTitle">Media Mall Management System</div>
         <div class="smallTitle">
-          致力于服务高质量的商城后台
+          Dedicated to serving high-quality e-commerce backends
         </div>
       </div>
     </el-col>
     <el-col :lg="8" :md="12" class="right">
-      <h1 class="title01">欢迎回来</h1>
+      <h1 class="title01">Welcome Back</h1>
       <span><el-avatar :size="60" :src="testImage" class="lay"/></span>
       <div class="title02">
         <span class="h-[1px] w-16 bg-gray-200 "></span>
-        <span>账号密码登录</span>
+        <span>Account Password Login</span>
         <span class="h-[1px] w-16 bg-gray-200"></span>
       </div>
       <div>
@@ -29,21 +29,20 @@
           <li></li>
           <li></li>
         </ul>
-
       </div>
       <el-form ref="formRef" :rules="rules" :model="form" class="w-[250px]">
         <el-form-item prop="username">
           <el-input
               :prefix-icon="User"
               v-model="form.username"
-              placeholder="请输入用户名"
+              placeholder="Enter your username"
           />
         </el-form-item>
         <el-form-item prop="password">
           <el-input
               :prefix-icon="Lock"
               v-model="form.password"
-              placeholder="请输入密码"
+              placeholder="Enter your password"
               show-password
               type="password"
           />
@@ -55,13 +54,12 @@
               class="w-[250px]"
               type="primary"
               @click="onSubmit"
-          >登 录</el-button
+          >Log In</el-button
           >
         </el-form-item>
       </el-form>
     </el-col>
   </el-row>
-
 </template>
 
 <script setup>
@@ -70,6 +68,7 @@ import { Lock, User } from "@element-plus/icons-vue";
 import router from "../router";
 import axios from "axios"; // Import Axios for making HTTP requests
 import testImage from "../assets/testImage.jpg"
+import {useStore} from "vuex";
 
 const form = reactive({
   username: "",
@@ -80,37 +79,39 @@ const rules = reactive({
   username: [
     {
       required: true,
-      message: "用户名不能为空",
+      message: "Username cannot be empty",
       trigger: "blur",
     },
     {
       min: 2,
       max: 50,
-      message: "用户名长度必须在3-50之间",
+      message: "Username length must be between 3-50 characters",
       trigger: "blur",
     },
   ],
   password: [
     {
       required: true,
-      message: "密码不能为空",
+      message: "Password cannot be empty",
       trigger: "blur",
     },
     {
       min: 3,
       max: 50,
-      message: "密码长度必须在3-50之间",
+      message: "Password length must be between 3-50 characters",
       trigger: "blur",
     },
   ],
 });
 
 const formRef = ref(null);
+const store = useStore();
 
 const onSubmit = async () => {
   formRef.value.validate(async (valid) => {
     if (!valid) {
-      return false;
+      console.log('Form validation failed. Not redirecting.');
+      return false
     }
     try {
       const response = await axios.post("http://localhost:8081/user/search", {
@@ -119,21 +120,29 @@ const onSubmit = async () => {
       });
 
       let found = false;
+      let userId = null;
 
       for (let i = 0; i < response.data.length; i++) {
         if (response.data[i].username === form.username && response.data[i].password === form.password ) {
           found = true;
-          break; // 找到匹配的用户名，中断循环
+          userId = i;
+          break; // Found a matching username, break the loop
         }
       }
 
       if (found) {
-        ElMessage.success("登录成功！");
+        // Login successful, store user information in Vuex
+        store.commit('setUser', {
+          username: form.username,
+          usertype: response.data[userId].usertype, // Assuming the data returned has a userType field
+        });
+
+        ElMessage.success("Logged in successfully!");
         setTimeout(() => {
           router.push({ name: "allin" });
         }, 500);
       } else {
-        ElMessage.error("登录失败，用户名或密码错误");
+        ElMessage.error("Login failed. Invalid username or password");
       }
     } catch (error) {
       console.error("Error during authentication:", error);
@@ -162,7 +171,7 @@ const onSubmit = async () => {
       @apply  justify-center font-bold text-5xl text-light-100 mb-4 ;
     }
     .smallTitle{
-      @apply text-light-5000 font-bold
+      @apply text-light-500 font-bold
     }
   }
   .right {
@@ -194,10 +203,10 @@ const onSubmit = async () => {
   background-color: rgba(255, 255, 255, 0.15);
   position: absolute;
   bottom: -160px;
-  /* 执行动画：动画名 时长 线性 无限次播放*/
+  /* Execute animation: animation name duration linear infinite */
   animation: squres 2s linear infinite ;
 }
-/* 为每一个方块设置不同的位置、大小、动画延迟时间、动画时长、背景色  */
+/* Set different positions, sizes, animation delays, and durations, and background colors for each square */
 .bg-squares li:nth-child(1){
   left: 10%;
 }
@@ -205,66 +214,14 @@ const onSubmit = async () => {
   left: 20%;
   width: 80px;
   height: 80px;
-  /* 动画延迟时间 */
+  /* Animation delay */
   animation-delay:2s;
-  /* 动画时长 */
+  /* Animation duration */
   animation-duration: 17s;
 }
 .bg-squares li:nth-child(3){
   left: 25%;
   animation-delay: 4s;
 }
-.bg-squares li:nth-child(4){
-  left: 40%;
-  width: 60px;
-  height: 60px;
-  background-color:rgba(255, 255, 255, 0.25) ;
-  animation-duration: 22s;
-}
-.bg-squares li:nth-child(5){
-  left: 70%;
-}
-.bg-squares li:nth-child(6){
-  left: 80%;
-  width: 120px;
-  height:120px;
-  background-color:rgba(255, 255, 255, 0.2) ;
-  animation-delay: 3s;
-}
-.bg-squares li:nth-child(7){
-  left: 32%;
-  width: 160px;
-  height: 160px;
-  animation-delay: 7s;
-}
-.bg-squares li:nth-child(8){
-  left: 55%;
-  width: 20px;
-  height: 20px;
-  animation-delay: 15s;
-  animation-duration: 40s;
-}
-.bg-squares li:nth-child(9){
-  left: 25%;
-  width: 10px;
-  height: 10px;
-  background-color: rgba(255, 255, 255, 0.3);
-  animation-delay: 2s;
-  animation-duration: 40s;
-}
-.bg-squares li:nth-child(10){
-  left: 90%;
-  width: 160px;
-  height: 160px;
-  animation-delay: 11s;
-}
-@keyframes squres{
-  0%{
-    transform: translateY(0);
-  }
-  100%{
-    transform: translateY(-120vh) rotate(600deg);
-  }
-}
-</style>
 
+</style>

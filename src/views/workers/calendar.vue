@@ -25,18 +25,18 @@
       </el-table-column>
     </el-table>
 
-    <el-dialog v-model="popupVisible" title="输入员工">
+    <el-dialog v-model="popupVisible" title="Import employee">
       <el-form ref="popupForm" :model="popupForm" label-width="80px">
         <el-form-item label="Name" prop="employeeName">
           <el-input v-model="popupForm.employeeName"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="popupVisible = false">取消</el-button>
-        <el-button type="primary" @click="saveData">保存</el-button>
+        <el-button @click="popupVisible = false">cancel</el-button>
+        <el-button type="primary" @click="saveData">save</el-button>
       </div>
     </el-dialog>
-    <el-button type="primary" @click="randomFill">随机填充员工</el-button>
+    <el-button type="primary" @click="randomFill">Random filling</el-button>
   </div>
 </template>
 

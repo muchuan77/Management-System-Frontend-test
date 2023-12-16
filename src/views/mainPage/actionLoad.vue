@@ -1,24 +1,24 @@
 <template>
-  <el-form :model="form" label-width="120px">
-    <el-form-item label="活动 名称">
+  <el-form :model="form" label-width="150px">
+    <el-form-item label="Activity Name">
       <el-input v-model="form.activityName" />
     </el-form-item>
-    <el-form-item label="活动 类型">
+    <el-form-item label="Activity Type">
       <el-input v-model="form.activityType" />
     </el-form-item>
-    <el-form-item label="业务 位置">
-      <el-select v-model="form.activityZone" placeholder="请选择活动地点">
-        <el-option label="仓库1" value="仓库one" />
-        <el-option label="仓库2" value="仓库two" />
-        <el-option label="仓库3" value="仓库three" />
+    <el-form-item label="Business Location">
+      <el-select v-model="form.activityZone" placeholder="Please select a location">
+        <el-option label="Warehouse 1" value="warehouseOne" />
+        <el-option label="Warehouse 2" value="warehouseTwo" />
+        <el-option label="Warehouse 3" value="warehouseThree" />
       </el-select>
     </el-form-item>
-    <el-form-item label="活动 时间">
+    <el-form-item label="Activity Time">
       <el-col :span="11">
         <el-date-picker
-            v-model="form.activityTime"
+            v-model="form.activityDate"
             type="date"
-            placeholder="选择日期"
+            placeholder="Select date"
             style="width: 100%"
         />
       </el-col>
@@ -28,26 +28,25 @@
       <el-col :span="11">
         <el-time-picker
             v-model="form.activityTime"
-            placeholder="选择时间"
+            placeholder="Select time"
             style="width: 100%"
         />
       </el-col>
     </el-form-item>
-
-    <el-form-item label="资源 申请">
+    <el-form-item label="Resource Request">
       <el-radio-group v-model="form.activityResource">
-        <el-radio label="个人" />
-        <el-radio label="小组" />
-        <el-radio label="部门" />
-        <el-radio label="公司" />
+        <el-radio label="Individual" />
+        <el-radio label="Group" />
+        <el-radio label="Department" />
+        <el-radio label="Company" />
       </el-radio-group>
     </el-form-item>
-    <el-form-item label="活动 形式">
+    <el-form-item label="Activity Format">
       <el-input v-model="form.activityForm" type="textarea" />
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" @click="onSubmit">提交</el-button>
-      <el-button>取消</el-button>
+      <el-button type="primary" @click="onSubmit">Submit</el-button>
+      <el-button>Cancel</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -59,22 +58,52 @@ import axios from 'axios';
 const form = ref({
   activityName: '',
   activityZone: '',
+  activityDate: '',
   activityTime: '',
   activityType: '',
   activityForm: '',
   activityResource: '',
+  status: '',
 });
+
+const mergeDateTime = () => {
+  const datePart = new Date(form.value.activityDate);
+  const timePart = form.value.activityTime;
+
+  if (timePart instanceof Date) {
+    datePart.setHours(timePart.getHours(), timePart.getMinutes(), timePart.getSeconds());
+  } else {
+    // If timePart is in 'HH:mm:ss' string format, split and set hours, minutes, and seconds
+    const time = timePart.split(':');
+    datePart.setHours(parseInt(time[0]), parseInt(time[1]), parseInt(time[2] || 0));
+  }
+
+  // Format the datetime as 'YYYY-MM-DD HH:mm:ss'
+  return datePart.getFullYear() + '-' +
+      ('0' + (datePart.getMonth() + 1)).slice(-2) + '-' +
+      ('0' + datePart.getDate()).slice(-2) + ' ' +
+      ('0' + datePart.getHours()).slice(-2) + ':' +
+      ('0' + datePart.getMinutes()).slice(-2) + ':' +
+      ('0' + datePart.getSeconds()).slice(-2);
+};
 
 const onSubmit = async () => {
   try {
-    // 使用Axios向后端API端点发送POST请求
-    const response = await axios.post('http://localhost:8081/activity/add', form.value);
+    // Merge date and time
+    const activityDateTime = mergeDateTime();
+    const submitData = {
+      ...form.value,
+      activityTime: activityDateTime, // Use the merged date and time
+    };
 
-    // 根据需要处理响应（例如，显示成功消息，导航到另一页）
-    console.log('提交成功：', response.data);
+    // Send a POST request to the backend API endpoint using Axios
+    const response = await axios.post('http://localhost:8081/activity/add', submitData);
+
+    // Handle the response as needed (e.g., display a success message, navigate to another page)
+    console.log('Submission successful:', response.data);
   } catch (error) {
-    console.error('提交表单时出错：', error);
-    // 处理错误（例如，向用户显示错误消息）
+    console.error('Error submitting form:', error);
+    // Handle the error (e.g., show an error message to the user)
   }
 }
 </script>

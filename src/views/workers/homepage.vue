@@ -2,57 +2,57 @@
   <div>
     <el-card>
       <div slot="header">
-        <h2>员工信息</h2>
+        <h2>Employee Information</h2>
       </div>
-      <el-button type="primary" @click="showDialog">添加员工</el-button>
-      <el-button type="danger" @click="showDeleteDialog">删除员工</el-button>
+      <el-button type="primary" @click="showDialog">Add Employee</el-button>
+      <el-button type="danger" @click="showDeleteDialog">Delete Employee</el-button>
       <el-table :data="tableData" border style="width: 100%">
-        <el-table-column prop="employeeName" label="人员名称"></el-table-column>
-        <el-table-column prop="age" label="年龄"></el-table-column>
-        <el-table-column prop="gender" label="性别"></el-table-column>
-        <el-table-column prop="address" label="地址"></el-table-column>
-        <el-table-column prop="manHour" label="工时"></el-table-column>
+        <el-table-column prop="employeeName" label="Employee Name"></el-table-column>
+        <el-table-column prop="age" label="Age"></el-table-column>
+        <el-table-column prop="gender" label="Gender"></el-table-column>
+        <el-table-column prop="address" label="Address"></el-table-column>
+        <el-table-column prop="manHour" label="Man Hour"></el-table-column>
       </el-table>
 
-      <el-dialog v-model="dialogVisible" title="添加员工">
-        <el-form ref="formData" :model="form" label-width="80px">
-          <el-form-item label="人员名称" prop="employeeName">
+      <el-dialog v-model="dialogVisible" title="Add Employee">
+        <el-form ref="formData" :model="form" label-width="120px">
+          <el-form-item label="Employee Name" prop="employeeName">
             <el-input v-model="form.employeeName"></el-input>
           </el-form-item>
-          <el-form-item label="年龄" prop="age">
+          <el-form-item label="Age" prop="age">
             <el-input v-model="form.age"></el-input>
           </el-form-item>
-          <el-form-item label="性别" prop="gender">
+          <el-form-item label="Gender" prop="gender">
             <el-radio-group v-model="form.gender">
-              <el-radio label="male">男</el-radio>
-              <el-radio label="female">女</el-radio>
+              <el-radio label="male">Male</el-radio>
+              <el-radio label="female">Female</el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item label="地址" prop="address">
+          <el-form-item label="Address" prop="address">
             <el-input v-model="form.address"></el-input>
           </el-form-item>
-          <el-form-item label="工时" prop="manHour">
+          <el-form-item label="Man Hour" prop="manHour">
             <el-input v-model="form.manHour"></el-input>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-          <el-button @click="dialogVisible = false">取消</el-button>
-          <el-button type="primary" @click="saveItem">保存</el-button>
+          <el-button @click="dialogVisible = false">Cancel</el-button>
+          <el-button type="primary" @click="saveItem">Save</el-button>
         </div>
       </el-dialog>
 
-      <el-dialog v-model="deleteDialogVisible" title="确认删除">
+      <el-dialog v-model="deleteDialogVisible" title="Confirm Deletion">
         <el-form ref="deleteFormData" :model="form" label-width="80px">
-          <el-form-item label="人员名称" prop="employeeName">
+          <el-form-item label="Employee Name" prop="employeeName">
             <select v-model="selectedEmployeeId">
               <option v-for="employee in tableData" :key="employee.id" :value="employee.id">{{ employee.employeeName }}</option>
             </select>
           </el-form-item>
         </el-form>
-        <span>是否删除？</span>
+        <span>Are you sure you want to delete?</span>
         <div slot="footer" class="dialog-footer">
-          <el-button @click="deleteDialogVisible = false">取消</el-button>
-          <el-button type="danger" @click="confirmRemoveItem">是</el-button>
+          <el-button @click="deleteDialogVisible = false">Cancel</el-button>
+          <el-button type="danger" @click="confirmRemoveItem">Yes</el-button>
         </div>
       </el-dialog>
     </el-card>
@@ -81,7 +81,7 @@ export default {
     };
   },
   mounted() {
-    this.loadData();
+    this.loadData()
   },
   methods: {
     async loadData() {
@@ -133,7 +133,7 @@ export default {
     },
     async confirmRemoveItem() {
       if (!this.selectedEmployeeId) {
-        console.error("请选择要删除的员工");
+        console.error("Please select the employee to delete");
         return;
       }
 
@@ -144,7 +144,7 @@ export default {
           this.selectedEmployeeId = null;
         }
       } catch (error) {
-        console.error("删除员工时出错:", error);
+        console.error("Error deleting employee:", error);
       }
 
       this.deleteDialogVisible = false;

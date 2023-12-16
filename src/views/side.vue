@@ -9,38 +9,42 @@
     <el-sub-menu index = "1" >
       <template #title>
         <el-icon><Refrigerator /></el-icon>
-        <span >仓库 数据 </span>
+        <span >Depot Data </span>
       </template>
       <el-menu-item index="/side/ware/hardware">
-        <el-icon><Connection /></el-icon>入库记录 查看</el-menu-item>
+        <el-icon><Connection /></el-icon>Storage Record </el-menu-item>
       <el-menu-item index="/side/ware/manifest">
-        <el-icon><HomeFilled /></el-icon>仓库 货品</el-menu-item>
+        <el-icon><HomeFilled /></el-icon>Depot Waybill</el-menu-item>
     </el-sub-menu>
     <el-menu-item index="/side/home" >
       <el-icon><Cpu /></el-icon>
-      <div>员工 数据</div>
+      <div> Employee Data </div>
     </el-menu-item>
     <el-menu-item index="/side/calendar">
       <el-icon><document /></el-icon>
-      <div>轮班表 查看</div>
+      <div>Shift Watch</div>
     </el-menu-item>
     <el-menu-item index="/side/action">
       <el-icon><paperclip /></el-icon>
-      <div>员工请求 处理</div>
+      <div>E-request Processing</div>
     </el-menu-item>
     <el-menu-item index="/side/result">
       <el-icon><ChatLineRound /></el-icon>
-      <div>员工请求 查询</div>
+      <div>E-request Inquiry</div>
     </el-menu-item>
     <el-menu-item index="/side/self">
       <el-icon><User /></el-icon>
-      <div>个人 信息</div>
+      <div>Personal Information</div>
+    </el-menu-item>
+    <el-menu-item index="/side/user-management">
+      <el-icon><User /></el-icon>
+      <div>User Management</div>
     </el-menu-item>
   </el-menu>
 </template>
 
 <script setup>
-import { useRoute,useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 import {
   Back, ChatLineRound,
   Connection,
@@ -50,9 +54,10 @@ import {
   Location,
   Paperclip, Refrigerator,
   ShoppingTrolley,
-  User
+  User,
 } from "@element-plus/icons-vue";
 import Homepage from "./workers/homepage.vue";
+import Calendar from "./workers/calendar.vue";
 
 const route = useRoute();
 

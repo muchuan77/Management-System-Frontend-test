@@ -1,22 +1,22 @@
 <template>
-  <el-descriptions title="个人信息显示" :column="3" border>
+  <el-descriptions title="Personal Information" :column="3" border>
     <el-descriptions-item
-        label="用户"
+        label="User"
         label-align="right"
         align="center"
         label-class-name="my-label"
         class-name="my-content"
         width="150px"
-    >浮世英寿</el-descriptions-item>
-    <el-descriptions-item label="联系方式" label-align="right" align="center"
+    >John Doe</el-descriptions-item>
+    <el-descriptions-item label="Contact" label-align="right" align="center"
     >18100000000</el-descriptions-item>
-    <el-descriptions-item label="工作地点" label-align="right" align="center"
+    <el-descriptions-item label="Workplace" label-align="right" align="center"
     >Tokyo</el-descriptions-item>
-    <el-descriptions-item label="部门标签" label-align="right" align="center">
+    <el-descriptions-item label="Department Tags" label-align="right" align="center">
       <el-tag size="small">Office</el-tag>
     </el-descriptions-item>
-    <el-descriptions-item label="邮箱" label-align="right" align="center"
-    >2025797948@qq.com</el-descriptions-item>
+    <el-descriptions-item label="Email" label-align="right" align="center"
+    >john.doe@example.com</el-descriptions-item>
   </el-descriptions>
 </template>
 <style scoped>
