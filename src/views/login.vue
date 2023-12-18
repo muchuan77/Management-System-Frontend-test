@@ -54,8 +54,7 @@
               class="w-[250px]"
               type="primary"
               @click="onSubmit"
-          >Log In</el-button
-          >
+          >Log In</el-button>
         </el-form-item>
       </el-form>
     </el-col>
@@ -135,6 +134,9 @@ const onSubmit = async () => {
         store.commit('setUser', {
           username: form.username,
           usertype: response.data[userId].usertype, // Assuming the data returned has a userType field
+          contact: response.data[userId].contact,
+          workplace: response.data[userId].workplace,
+          mailbox: response.data[userId].mailbox,
         });
 
         ElMessage.success("Logged in successfully!");

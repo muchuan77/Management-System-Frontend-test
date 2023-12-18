@@ -24,6 +24,12 @@
             <el-radio label="entrepot" />
           </el-radio-group>
         </el-form-item>
+        <el-form-item label="Contact" prop="contact">
+          <el-input v-model="newUser.contact" placeholder="Contact"></el-input>
+        </el-form-item>
+        <el-form-item label="workplace" prop="workplace">
+          <el-input v-model="newUser.workplace" placeholder="Workplace"></el-input>
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="addDialogVisible = false">Cancel</el-button>
@@ -37,6 +43,8 @@
       <el-table-column prop="mailbox" label="Email" width="120" show-overflow-tooltip></el-table-column>
       <el-table-column prop="password" label="Password" width="120" show-overflow-tooltip></el-table-column>
       <el-table-column prop="usertype" label="User Type" width="120" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="contact" label="Contact" width="120" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="workplace" label="Workplace" width="120" show-overflow-tooltip></el-table-column>
       <el-table-column fixed= "right" label="Actions" width="120">
         <template #default="scope">
           <el-button
@@ -72,6 +80,12 @@
         <el-form-item label="User Type" prop="usertype">
           <el-input v-model="editUser.usertype"></el-input>
         </el-form-item>
+        <el-form-item label="Contact" prop="contact">
+          <el-input v-model="editUser.contact"></el-input>
+        </el-form-item>
+        <el-form-item label="Workplace" prop="workplace">
+          <el-input v-model="editUser.workplace"></el-input>
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="editDialogVisible = false">Cancel</el-button>
@@ -94,13 +108,17 @@ export default {
         username: '',
         password: '',
         mailbox: '',
-        usertype: ''
+        usertype: '',
+        contact: '',
+        workplace: '',
       },
       editUser: {
         username: '',
         password: '',
         mailbox: '',
-        usertype: ''
+        usertype: '',
+        contact: '',
+        workplace: '',
       },
       editDialogVisible: false,
     };

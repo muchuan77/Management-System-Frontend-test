@@ -11,9 +11,9 @@
             />
             <span class="text-large font-600 mr-3">  </span>
             <span class="text-sm mr-2" style="color: var(--el-text-color-regular)">
-              Fox
+              {{ $store.state.user.username }}
             </span>
-            <el-tag>Master</el-tag>
+            <el-tag>{{ $store.state.user.usertype}}</el-tag>
           </div>
         </template>
         <template #extra>

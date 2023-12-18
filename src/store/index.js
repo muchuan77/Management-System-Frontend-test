@@ -4,7 +4,7 @@ import { createStore } from 'vuex';
 const store = createStore({
     state: {
         loggedIn: false,
-        user: null, // 初始状态可以根据您的需要定义
+        user: null,// 初始状态可以根据您的需要定义
         users: [],
     },
     mutations: {
