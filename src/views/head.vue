@@ -18,9 +18,7 @@
         </template>
         <template #extra>
           <div class="flex items-center">
-            <el-button>
-              <router-link to="/login">Switch Account</router-link>
-            </el-button>
+            <el-button @click="switchAccount">Switch Account</el-button>
             <el-button type="primary" class="ml-2" @click="onLogout">Logout</el-button>
           </div>
         </template>
@@ -31,20 +29,25 @@
 
 <script setup>
 import testImage from '../assets/testImage.jpg'
-import { useStore } from 'vuex';
-import { ElMessage } from 'element-plus';
-import router from '../router';
+import { useStore } from 'vuex'
+import { ElMessage } from 'element-plus'
+import router from '../router'
 
-const store = useStore();
+const store = useStore()
 
 const onLogout = () => {
   // Perform logout logic and then call the 'logout' mutation in Vuex
-  store.commit('logout');
+  store.commit('logout')
   // You can add other logout logic here, such as clearing local storage, etc.
-  ElMessage.success("Logged out successfully!");
+  ElMessage.success("Logged out successfully!")
   // Redirect to the login page
-  router.push({ name: 'login' });
+  router.push({ name: 'login' })
 };
+
+
+const switchAccount = () => {
+  onLogout()
+}
 </script>
 
 <style scoped>
